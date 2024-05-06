@@ -19,7 +19,7 @@ routes(app);
 
 mongoose.connect(`${process.env.MONGO_DB}`)
     .then(() => {
-        console.log('Connect Db success!!!')
+        console.log('Kết nối thành công tới database!!!')
     })
     .catch((err) => {
         console.log(err)

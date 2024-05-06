@@ -32,7 +32,7 @@ export const WrapperLeft = styled.div`
 `
 
 export const WrapperListOrder = styled.div`
-
+  margin-bottom: 15px;
 `
 
 export const WrapperItemOrder = styled.div`

@@ -39,7 +39,8 @@ export const WrapperListOrder = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-top: 20px;
+  padding: 20px 0;
+  flex-grow: 1;
 `
 export const WrapperFooterItem = styled.div`
   display: flex;

@@ -45,9 +45,9 @@ const NavBarComponent = () => {
 
     return (
         <div>
-            <WrapperLableText>Lable</WrapperLableText>
+            <WrapperLableText>Danh mục</WrapperLableText>
             <WrapperContent>
-                {renderContent('text', ['Giày nam', 'Giày nữ', 'Áo nữ'])}
+                {renderContent('text', ['Giày nam', 'Giày nữ', 'Quần jean nam', 'Quần jogger nam', 'Quần nữ', 'Áo Croptop nữ', 'Áo khoác nam', 'Áo phông nữ', 'Áo polo nam', 'Áo sơ mi nam', 'Áo vest nam'])}
             </WrapperContent>
         </div>
     );

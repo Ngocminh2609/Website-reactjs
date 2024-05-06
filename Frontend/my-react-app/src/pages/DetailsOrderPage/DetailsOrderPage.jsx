@@ -1,17 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useMemo } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import Loading from '../../components/LoadingComponent/Loading'
 import { orderContant } from '../../contant'
 import * as OrderService from '../../services/OrderService'
 import { convertPrice } from '../../utils'
 import { WrapperAllPrice, WrapperContentInfo, WrapperHeaderUser, WrapperInfoUser, WrapperItem, WrapperItemLabel, WrapperLabel, WrapperNameProduct, WrapperProduct, WrapperStyleContent } from './style'
+import ButtonComponent from './../../components/ButtonComponent/ButtonComponent';
 
 const DetailsOrderPage = () => {
   const params = useParams()
   const location = useLocation()
   const { state } = location
   const { id } = params
+  const navigate = useNavigate()
 
   const fetchDetailsOrder = async () => {
     const res = await OrderService.getDetailsOrder(id, state?.token)
@@ -36,11 +38,29 @@ const DetailsOrderPage = () => {
     return result
   },[data])
 
+  const handleBack = () => {
+    navigate('/my-order')
+  }
+
   return (
     <Loading isLoading={isLoading}>
       <div style={{width: '100%', height: '100vh', background: '#f5f5fa'}}>
-        <div style={{ width: '1270px', margin: '0 auto', height: '1270px'}}>
-          <h4>Chi tiết đơn hàng</h4>
+        <div style={{ width: '1270px', margin: '0 auto', height: '100vh'}}>
+        <ButtonComponent
+            size={40}
+            styleButton={{
+                background: 'rgb(26, 148, 255)',
+                height: '38px',
+                width: '200px',
+                border: 'none',
+                borderRadius: '4px',
+                marginTop: '10px'
+            }}
+            onClick={handleBack}
+            textButton={'<-- Quay lại'}
+            styleTextButton={{ color: '#fff', fontSize: '15px', fontWeight: '700' }}
+          ></ButtonComponent>
+          <h4 style={{textAlign: 'center', fontSize: '25px'}}>Chi tiết đơn hàng</h4>
           <WrapperHeaderUser>
             <WrapperInfoUser>
               <WrapperLabel>Địa chỉ người nhận</WrapperLabel>
@@ -92,7 +112,7 @@ const DetailsOrderPage = () => {
                       whiteSpace:'nowrap',
                       marginLeft: '10px',
                       height: '70px',
-                    }}>Điện thoại</div>
+                    }}><span style={{fontWeight: 'bold'}}>{order?.name}</span></div>
                   </WrapperNameProduct>
                   <WrapperItem>{convertPrice(order?.price)}</WrapperItem>
                   <WrapperItem>{order?.amount}</WrapperItem>

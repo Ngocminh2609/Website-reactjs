@@ -4,7 +4,6 @@ import { Col, Image, Rate, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import imageProductSmall from '../../assets/images/imagesmall.webp'
 import { addOrderProduct, resetOrder } from '../../redux/slides/orderSlide'
 import * as ProductService from '../../services/ProductService'
 import { convertPrice, initFacebookSDK } from '../../utils'
@@ -13,7 +12,7 @@ import CommentComponent from '../CommentComponent/CommentComponent'
 import LikeButtonComponent from '../LikeButtonComponent/LikeButtonComponent'
 import Loading from '../LoadingComponent/Loading'
 import * as message from '../Message/Message'
-import { WrapperAddressProduct, WrapperInputNumber, WrapperPriceProduct, WrapperPriceTextProduct, WrapperQualityProduct, WrapperStyleColImage, WrapperStyleImageSmall, WrapperStyleNameProduct, WrapperStyleTextSell } from './style'
+import { WrapperAddressProduct, WrapperInputNumber, WrapperPriceProduct, WrapperPriceTextProduct, WrapperQualityProduct, WrapperStyleNameProduct, WrapperStyleTextSell } from './style'
 
 const ProductDetailsComponent = ({idProduct}) => {
     const [numProduct, setNumProduct] = useState(1)
@@ -41,11 +40,16 @@ const ProductDetailsComponent = ({idProduct}) => {
     }, [])
 
     useEffect(() => {
-        const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id) 
-        if((orderRedux?.amount + numProduct) <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
-            setErrorLimitOrder(false)
-        } else if(productDetails?.countInStock === 0){
-            setErrorLimitOrder(true)
+        if (Array.isArray(order?.orderItems)) {
+            const orderRedux = order?.orderItems.find((item) => item.product === productDetails?._id);
+            if ((orderRedux?.amount + numProduct) <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
+                setErrorLimitOrder(false);
+            } else if (productDetails?.countInStock === 0) {
+                setErrorLimitOrder(true);
+            }
+        } else {
+            console.error("order?.orderItems is not an array");
+            // Xử lý trường hợp khi order?.orderItems không phải là một mảng
         }
     },[numProduct])
 
@@ -94,7 +98,7 @@ const ProductDetailsComponent = ({idProduct}) => {
             //         required: true,
             //     },
             // },
-            const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id)
+            const orderRedux = Array.isArray(order?.orderItems) ? order?.orderItems.find((item) => item.product === productDetails?._id) : null;
             if((orderRedux?.amount + numProduct) <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
                 dispatch(addOrderProduct({
                     orderItem: {
@@ -115,8 +119,8 @@ const ProductDetailsComponent = ({idProduct}) => {
 
     return (
         <Loading isLoading={isLoading}>
-            <Row style={{ padding: '16px', background: '#fff', borderRadius: '4px', height:'100%' }}>
-                <Col span={10} style={{ borderRight: '1px solid #e5e5e5', paddingRight: '8px' }}>
+            <Row style={{ padding: '16px', background: '#fff', borderRadius: '4px', minHeight: '90vh', marginBottom: '10px' }}>
+                <Col span={10} style={{ borderRight: '1px solid #e5e5e5', paddingRight: '8px', height: '100%' }}>
                     <Image src={productDetails?.image} alt="image prodcut" preview={false} />
                     {/* <Row style={{ paddingTop: '10px', justifyContent: 'space-between' }}>
                         <WrapperStyleColImage span={4} sty>

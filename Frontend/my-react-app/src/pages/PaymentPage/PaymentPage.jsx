@@ -1,22 +1,22 @@
-import { Form, Radio } from 'antd';
-import React, { useEffect, useState } from 'react';
+import {Form, Radio } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { Lable, WrapperInfo, WrapperLeft, WrapperRadio, WrapperRight, WrapperTotal } from './style';
 
-import { useMemo } from 'react';
-import { PayPalButton } from "react-paypal-button-v2";
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent';
-import InputComponent from '../../components/InputComponent/InputComponent';
-import * as message from '../../components/Message/Message';
-import ModalComponent from '../../components/ModalComponent/ModalComponent';
-import { useMutationHooks } from '../../hooks/useMutationHook';
-import { removeAllOrderProduct } from '../../redux/slides/orderSlide';
-import { updateUser } from '../../redux/slides/userSlide';
-import * as OrderService from '../../services/OrderService';
-import * as PaymentService from '../../services/PaymentService';
-import * as UserService from '../../services/UserService';
+import { useDispatch, useSelector } from 'react-redux';
 import { convertPrice } from '../../utils';
+import { useMemo } from 'react';
+import ModalComponent from '../../components/ModalComponent/ModalComponent';
+import InputComponent from '../../components/InputComponent/InputComponent';
+import { useMutationHooks } from '../../hooks/useMutationHook';
+import * as  UserService from '../../services/UserService'
+import * as OrderService from '../../services/OrderService'
+import * as message from '../../components/Message/Message'
+import { updateUser } from '../../redux/slides/userSlide';
+import { useNavigate } from 'react-router-dom';
+import { removeAllOrderProduct } from '../../redux/slides/orderSlide';
+import { PayPalButton } from "react-paypal-button-v2";
+import * as PaymentService from '../../services/PaymentService'
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order)
@@ -136,7 +136,7 @@ const PaymentPage = () => {
     },
   )
 
-  const { data} = mutationUpdate
+  const {data} = mutationUpdate
   const {data: dataAdd, isSuccess, isError} = mutationAddOrder
 
   useEffect(() => {
@@ -248,7 +248,7 @@ const PaymentPage = () => {
               <WrapperInfo>
                 <div>
                   <Lable>Chọn phương thức giao hàng</Lable>
-                  <WrapperRadio onChange={handleDilivery} value={delivery}> 
+                  <WrapperRadio onChange={handleDilivery} value={delivery}>
                     <Radio  value="fast"><span style={{color: '#ea8500', fontWeight: 'bold'}}>FAST</span> Giao hàng tiết kiệm</Radio>
                     <Radio  value="gojek"><span style={{color: '#ea8500', fontWeight: 'bold'}}>GO_JEK</span> Giao hàng tiết kiệm</Radio>
                   </WrapperRadio>
